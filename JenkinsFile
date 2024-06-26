@@ -11,7 +11,7 @@ pipeline {
 
   stages {
     stage('Checkout') {
-         steps {
+      steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], 
                   userRemoteConfigs: [[url: 'https://github.com/CatherineGomez-AD/Calculator-with-CI-CD.git', 
                                        credentialsId: 'github-token']]])
@@ -45,7 +45,7 @@ pipeline {
 
   post {
     always {
-      junit 'path/to/test-results.xml'
+      junit 'test-results/test-results.xml'
       archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
     }
   }
