@@ -6,31 +6,34 @@ module.exports = function(config) {
         require('karma-jasmine'),
         require('karma-chrome-launcher'),
         require('karma-jasmine-html-reporter'),
-        require('karma-coverage-istanbul-reporter'),
+        require('karma-coverage'),
         require('@angular-devkit/build-angular/plugins/karma'),
-        require('karma-junit-reporter')  
+        require('karma-junit-reporter')
       ],
       client: {
-        clearContext: false 
+        clearContext: false // leave Jasmine Spec Runner output visible in browser
       },
-      coverageIstanbulReporter: {
-        dir: require('path').join(__dirname, './coverage/my-app'),
-        reports: ['html', 'lcovonly', 'text-summary'],
-        fixWebpackSourcePaths: true
+      preprocessors: {
+        'src/**/*.js': ['coverage'] // Ajusta esto según la ubicación de tu código fuente
       },
-      reporters: ['progress', 'kjhtml', 'junit'],  
+      coverageReporter: {
+        type: 'cobertura', // Tipo XML para Jenkins
+        dir: 'coverage/',
+        file: 'coverage.xml'
+      },
+      reporters: ['progress', 'kjhtml', 'coverage', 'junit'],
       junitReporter: {
-        outputDir: 'test-results', 
-        outputFile: 'test-results.xml',  
-        useBrowserName: false  
+        outputDir: 'test-results', // Directorio donde se generará el archivo
+        outputFile: 'test-results.xml',
+        useBrowserName: false
       },
       port: 9876,
       colors: true,
       logLevel: config.LOG_INFO,
-      autoWatch: true,
+      autoWatch: false,
       browsers: ['ChromeHeadless'],
-      singleRun: false,
-      restartOnFileChange: true
+      singleRun: true,
+      restartOnFileChange: false
     });
   };
   
