@@ -1,0 +1,6 @@
+<div class="calculator">
+  <app-display [currentInput]="currentInput"></app-display>
+  <app-clear-button (clearEvent)="clear()"></app-clear-button>
+  <app-buttons (numberEvent)="appendNumber($event)" (operationEvent)="chooseOperation($event)" (computeEvent)="compute()"></app-buttons>
+</div>
+

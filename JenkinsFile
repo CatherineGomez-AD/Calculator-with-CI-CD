@@ -1,0 +1,52 @@
+pipeline {
+  agent any
+
+  tools {
+    nodejs 'nodejs'
+  }
+
+  environment {
+    CI = 'true'
+  }
+
+  stages {
+    stage('Checkout') {
+         steps {
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], 
+                  userRemoteConfigs: [[url: 'https://github.com/CatherineGomez-AD/Calculator-with-CI-CD.git', 
+                                       credentialsId: 'github-token']]])
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Lint') {
+      steps {
+        sh 'npm run lint'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh 'npm run test -- --watch=false --browsers=ChromeHeadless'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+  }
+
+  post {
+    always {
+      junit 'path/to/test-results.xml'
+      archiveArtifacts artifacts: 'dist/**', allowEmptyArchive: true
+    }
+  }
+}
