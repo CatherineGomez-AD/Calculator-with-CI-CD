@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./calculator.component.css'],
 })
 export class CalculatorComponent {
-  currentInput: string = '0';
-  previousInput: string = '';
+  currentInput = '0';
+  previousInput = '';
   operation: string | null = null;
 
   clear(): void {

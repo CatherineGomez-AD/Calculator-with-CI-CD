@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./display.component.css']
 })
 export class DisplayComponent {
-  @Input() currentInput: string = '0';
+  @Input() currentInput = '0';
 }
